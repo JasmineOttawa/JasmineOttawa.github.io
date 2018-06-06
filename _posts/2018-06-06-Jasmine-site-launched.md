@@ -4,4 +4,4 @@ title: "Jasmine,Ottawa,launch site"
 date: 2018-06-06
 ---
 
-Well. Finally got around to putting this old website together. Neat thing about it - powered by [Jekyll](http://jekyllrb.com)
+Site launched on Wednesday, June 6th, 2018 - powered by [Jekyll](http://jekyllrb.com)
