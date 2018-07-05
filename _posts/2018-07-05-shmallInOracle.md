@@ -1,3 +1,10 @@
+---
+layout: post
+title: "SHMALL in Oracle"
+date: 2018-07-05
+---
+
+
 SHMMAX and SHMALL are two key shared memory parameters that directly impact’s the way by which Oracle creates an SGA. Shared memory is nothing but part of Unix IPC System (Inter Process Communication) maintained by kernel where multiple processes 
 share a single chunk of memory to communicate with each other.
 
