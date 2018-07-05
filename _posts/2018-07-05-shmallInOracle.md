@@ -18,8 +18,11 @@ SHMALL is the total size of Shared Memory Segments System wide set in “pages�
   
 SHMALL is the total size of Shard Memory Segments System wide, it should always be less than the Physical Memory on the System and should be greater than sum of SGA’s of all the oracle databases on the server.   
 when shmall is less than the total SGA, startup will throw error message :   
-ORA-27102: out of memory # on 11g   
-ORA-27104: system-defined limits for shared memory was misconfigured # on 12c     
+    ORA-27102: out of memory # on 11g   
+    ORA-27104: system-defined limits for shared memory was misconfigured # on 12c  
+
+When create database, you may get following message:  
+    INFO: Error Message:PRVG-1201 : OS kernel parameter "shmall" does not have expected configured value on node "..." [Expected = "13172980" ; Current = "2097152"; Configured = "2097152"]  
   
 In RHEL6, default value of shmall is set big enough, almost no limit for shared memory.   
 kernel.shmmax = 68719476736  
