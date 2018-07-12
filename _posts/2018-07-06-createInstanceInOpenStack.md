@@ -8,7 +8,7 @@ Q -- create instance on openstack queens got error "500 Internal Server Error"
 openstack server create --image Ubuntu_16.04_LTS --flavor ... --key-name ... --nic net-id=.... ttt  
 openstack server list  
   
-investigation --   
+investigation -- due to syntax error in nova.conf  
 /var/log/nova/nova-scheduler.log shows 500 internel server error :   
   *The server encountered an internal error or misconfiguration and was unable to complete your request. 
   Please contact the server administrator at [no address given] to inform them of the time this error occurred,  and the actions you performed just before this error.    
@@ -18,13 +18,13 @@ go to server error log, /var/log/httpd/placement_wsgi_error.log, First error sho
  *[Sun Jul 08 03:44:39[:error]  mod_wsgi (pid=14961): Target WSGI script '/var/www/cgi-bin/nova/nova-placement-api' cannot be loaded as Python module.  
   [Sun Jul 08 03:44:39[:error]  mod_wsgi (pid=14961): Exception occurred processing WSGI script '/var/www/cgi-bin/nova/nova-placement-api'.  
   [Sun Jul 08 03:44:39[:error]  Traceback (most recent call last):  
-  [Sun Jul 08 03:44:39[:error]    File "/var/www/cgi-bin/nova/nova-placement-api", line 54, in <module>  
+  [Sun Jul 08 03:44:39[:error]    File "/var/www/cgi-bin/nova/nova-placement-api", line 54, in module  
   [Sun Jul 08 03:44:39[:error]      application = init_application()  
   [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/nova/api/openstack/placement/wsgi.py", line 54, in init_application  
   [Sun Jul 08 03:44:39[:error]      config.parse_args([], default_config_files=[conffile])  
   [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/nova/config.py", line 52, in parse_args  
   [Sun Jul 08 03:44:39[:error]      default_config_files=default_config_files)  
-  [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 2502, in __call__  
+  [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 2502, in call  
   [Sun Jul 08 03:44:39[:error]      else sys.argv[1:])  
   [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 3166, in _parse_cli_opts  
   [Sun Jul 08 03:44:39[:error]      return self._parse_config_files()  
