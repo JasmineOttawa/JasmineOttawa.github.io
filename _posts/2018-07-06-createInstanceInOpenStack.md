@@ -24,7 +24,7 @@ so, someone modified /etc/nova/nova.conf, add 2 lines at end:
 openstack-config --set /etc/nova/nova.conf DEFAULT compute_driver libvirt.LibvirtDriver  
 openstack-config --set /etc/nova/nova.conf libvirt virt_type kvm  
   
-remove these 2 lines, the config is already in the file, uncomment them in the corresponding section  
+remove these 2 lines, the config is already in the file, leave it as is, they're same as default value. 
  
 Now another error   
  *[Thu Jul 12 10:10:16[:error] mod_wsgi (pid=14970): Target WSGI script '/var/www/cgi-bin/nova/nova-placement-api' cannot be loaded as Python module.  
