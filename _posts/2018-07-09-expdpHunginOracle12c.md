@@ -6,7 +6,7 @@ date: 2018-07-09
 Q - expdp hung on “wait for unread message on broadcast channel”  
   
 investigation -   
-expdp $WSP_SCHEMA_USR/$WSP_SCHEMA_PWD directory=streams_pump_dir parfile=tables.par parallel=10 logfile=expdp_strminst.log exclude=CONSTRAINT,INDEX,TRIGGER dumpfile=streams_export.dmp FLASHBACK_TIME=$flashback_time job_name=STRMINST reuse_dumpfiles=Y content=ALL network_link=$DBNAME 2
+expdp $WSP_SCHEMA_USR/$WSP_SCHEMA_PWD directory=streams_pump_dir parfile=tables.par parallel=10 logfile=expdp_strminst.log exclude=CONSTRAINT,INDEX,TRIGGER dumpfile=streams_export.dmp FLASHBACK_TIME=$flashback_time job_name=STRMINST reuse_dumpfiles=Y content=ALL network_link=$DBNAME  
   
 add TRACE=480300 in command line,  
 trace was generated on dm process, it stucks at a system call:   
