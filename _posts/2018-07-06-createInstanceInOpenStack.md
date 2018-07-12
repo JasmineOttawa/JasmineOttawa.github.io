@@ -45,16 +45,15 @@ Review /var/log/httpd/placement_wsgi_error.log, there is another error message t
 [Fri Jul 13 00:24:43.697909 2018] [:error] [pid 17714]   exception.NotSupportedWarning*   
   
 This error message also shows up when manually testing placement API:    
-*$ sudo -H -u nova bash -c '/var/www/cgi-bin/nova/nova-placement-api'    
+*sudo -H -u nova bash -c '/var/www/cgi-bin/nova/nova-placement-api'    
 bash: /var/www/cgi-bin/nova/nova-placement-api: Permission denied   
-$ chmod 744 /var/www/cgi-bin/nova/nova-placement-api   
-$ sudo -H -u nova bash -c '/var/www/cgi-bin/nova/nova-placement-api'    
+chmod 744 /var/www/cgi-bin/nova/nova-placement-api   
+sudo -H -u nova bash -c '/var/www/cgi-bin/nova/nova-placement-api'    
 /usr/lib/python2.7/site-packages/oslo_db/sqlalchemy/enginefacade.py:332: NotSupportedWarning: Configuration option(s) ['use_tpool'] not supported    
   exception.NotSupportedWarning 
 STARTING test server nova.api.openstack.placement.wsgi.init_application    
 Available at http://localhost.localdomain:8000/  
-DANGER! For testing only, do not use in production  
-*
+DANGER! For testing only, do not use in production*  
 
 Refer to https://github.com/openstack/oslo.db/commit/c432d9e93884d6962592f6d19aaec3f8f66ac3a2  
 made following change to eliminate this message:    
