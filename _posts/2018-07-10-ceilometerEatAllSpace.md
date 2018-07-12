@@ -4,6 +4,7 @@ title: "openstack - ceilometer eats up all the spaced"
 date: 2018-07-10
 ---
 Q - The 3 controller nodes fall short of space due to increasing size of ceilometer database.    
+  
 Investigation - how to reduce the size of ceilometer mongodb, why is the size of /var/lib/mongodb increasing gradually?   
   
 -- suppress the ceilometer data growth   
