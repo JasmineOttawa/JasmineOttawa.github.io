@@ -3,8 +3,9 @@ layout: post
 title: "SHMALL in Oracle"
 date: 2018-07-05
 ---
-
-
+Q - tuning oracle 12c on RHEL7 got error ORA-27104. same tuning process works fine on RHEL6  
+  
+Investigation -  
 SHMMAX and SHMALL are two key shared memory parameters that directly impact’s the way by which Oracle creates an SGA. Shared memory is nothing but part of Unix IPC System (Inter Process Communication) maintained by kernel where multiple processes share a single chunk of memory to communicate with each other.
 
 While trying to create an SGA during a database startup, Oracle chooses from one of the 3 memory management models   
