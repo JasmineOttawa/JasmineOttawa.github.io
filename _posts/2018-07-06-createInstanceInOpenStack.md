@@ -17,21 +17,7 @@ investigation -- due to syntax error in nova.conf
 go to server error log, /var/log/httpd/placement_wsgi_error.log, First error shows at Jul 08:   
  *[Sun Jul 08 03:44:39[:error]  mod_wsgi (pid=14961): Target WSGI script '/var/www/cgi-bin/nova/nova-placement-api' cannot be loaded as Python module.  
   [Sun Jul 08 03:44:39[:error]  mod_wsgi (pid=14961): Exception occurred processing WSGI script '/var/www/cgi-bin/nova/nova-placement-api'.  
-  [Sun Jul 08 03:44:39[:error]  Traceback (most recent call last):  
-  [Sun Jul 08 03:44:39[:error]    File "/var/www/cgi-bin/nova/nova-placement-api", line 54, in module  
-  [Sun Jul 08 03:44:39[:error]      application = init_application()  
-  [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/nova/api/openstack/placement/wsgi.py", line 54, in init_application  
-  [Sun Jul 08 03:44:39[:error]      config.parse_args([], default_config_files=[conffile])  
-  [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/nova/config.py", line 52, in parse_args  
-  [Sun Jul 08 03:44:39[:error]      default_config_files=default_config_files)  
-  [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 2502, in call  
-  [Sun Jul 08 03:44:39[:error]      else sys.argv[1:])  
-  [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 3166, in _parse_cli_opts  
-  [Sun Jul 08 03:44:39[:error]      return self._parse_config_files()  
-  [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 3183, in _parse_config_files  
-  [Sun Jul 08 03:44:39[:error]      ConfigParser._parse_file(config_file, namespace)  
-  [Sun Jul 08 03:44:39[:error]    File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 1950, in _parse_file  
-  [Sun Jul 08 03:44:39[:error]      raise ConfigFileParseError(pe.filename, str(pe))  
+......
   [Sun Jul 08 03:44:39[:error]  ConfigFileParseError: Failed to parse /etc/nova/nova.conf: at /etc/nova/nova.conf:11307, No ':' or '=' found in assignment: 'openstack-config --set*    
 
 so, someone modified /etc/nova/nova.conf, add 2 lines at end:   
@@ -40,31 +26,32 @@ openstack-config --set /etc/nova/nova.conf libvirt virt_type kvm
   
 remove these 2 lines, the config is already in the file, uncomment them in the corresponding section  
  
-Now got another error   
+Now another error   
  *[Thu Jul 12 10:10:16[:error] mod_wsgi (pid=14970): Target WSGI script '/var/www/cgi-bin/nova/nova-placement-api' cannot be loaded as Python module.  
   [Thu Jul 12 10:10:16[:error] mod_wsgi (pid=14970): Exception occurred processing WSGI script '/var/www/cgi-bin/nova/nova-placement-api'.  
-  [Thu Jul 12 10:10:16[:error] Traceback (most recent call last):  
-  [Thu Jul 12 10:10:16[:error]   File "/var/www/cgi-bin/nova/nova-placement-api", line 54, in module  
-  [Thu Jul 12 10:10:16[:error]     application = init_application()  
-  [Thu Jul 12 10:10:16[:error]   File "/usr/lib/python2.7/site-packages/nova/api/openstack/placement/wsgi.py", line 54, in init_application  
-  [Thu Jul 12 10:10:16[:error]     config.parse_args([], default_config_files=[conffile])  
-  [Thu Jul 12 10:10:16[:error]   File "/usr/lib/python2.7/site-packages/nova/config.py", line 35, in parse_args  
-  [Thu Jul 12 10:10:16[:error]     log.register_options(CONF)  
-  [Thu Jul 12 10:10:16[:error]   File "/usr/lib/python2.7/site-packages/oslo_log/log.py", line 250, in register_options  
-  [Thu Jul 12 10:10:16[:error]     conf.register_cli_opts(_options.common_cli_opts)  
-  [Thu Jul 12 10:10:16[:error]   File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 2440, in inner  
-  [Thu Jul 12 10:10:16[:error]     result = f(self, *args, kwargs)  
-  [Thu Jul 12 10:10:16[:error]   File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 2662, in register_cli_opts  
-  [Thu Jul 12 10:10:16[:error]     self.register_cli_opt(opt, group, clear_cache=False)  
-  [Thu Jul 12 10:10:16[:error]   File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 2444, in inner  
-  [Thu Jul 12 10:10:16[:error]     return f(self, *args, kwargs)  
-  [Thu Jul 12 10:10:16[:error]   File "/usr/lib/python2.7/site-packages/oslo_config/cfg.py", line 2654, in register_cli_opt  
-  [Thu Jul 12 10:10:16[:error]     raise ArgsAlreadyParsedError("cannot register CLI option")  
+......
   [Thu Jul 12 10:10:16[:error] ArgsAlreadyParsedError: arguments already parsed: cannot register CLI option* 
 
 as per https://ask.openstack.org/en/question/6626/nova-arguments-already-parsed-cannot-register-cli-option/  
 This error comes up when the attribute has been specified repeatedly and with different values at different config files.  
-  
-so there's other changes in nova.conf, there's no backup left from prior change, how to restore nova.conf?   
+
+Restarting httpd service by:  systemctl restart httpd   
+now instance could be created succesfully.  
+
+Review /var/log/httpd/placement_wsgi_error.log, there is another error message though:  
+*[Fri Jul 13 00:24:43.697804 2018] [:error] [pid 17714] /usr/lib/python2.7/site-packages/oslo_db/sqlalchemy/enginefacade.py:332: NotSupportedWarning: Configuration option(s) ['use_tpool'] not supported  
+[Fri Jul 13 00:24:43.697909 2018] [:error] [pid 17714]   exception.NotSupportedWarning*
+
+Refer to https://github.com/openstack/oslo.db/commit/c432d9e93884d6962592f6d19aaec3f8f66ac3a2  
+made following change to eliminate this message:    
+*cd /usr/lib/python2.7/site-packages/oslo_db/sqlalchemy    
+[root@illinbws111 sqlalchemy(keystone_core)]# diff enginefacade.py enginefacade.py.20180712    
+175c175    
+                'db_max_retry_interval', 'backend','use_tpool'])  
+                'db_max_retry_interval', 'backend'])*
+
+
+
+
 
 
