@@ -38,10 +38,11 @@ This error comes up when the attribute has been specified repeatedly and with di
 Restarting httpd service by:  systemctl restart httpd   
 now instance could be created succesfully.  
 
-<H1> Manual test placement API</H1>
-Review /var/log/httpd/placement_wsgi_error.log, there is another error message though:   
-*[Fri Jul 13 00:24:43.697804 2018] [:error] [pid 17714] /usr/lib/python2.7/site-packages/oslo_db/sqlalchemy/enginefacade.py:332: NotSupportedWarning: Configuration option(s) ['use_tpool'] not supported    
-[Fri Jul 13 00:24:43.697909 2018] [:error] [pid 17714]   exception.NotSupportedWarning*  
+# Manual test placement API #     
+
+Review /var/log/httpd/placement_wsgi_error.log, there is another error message though:     
+[Fri Jul 13 00:24:43.697804 2018] [:error] [pid 17714] /usr/lib/python2.7/site-packages/oslo_db/sqlalchemy/enginefacade.py:332: NotSupportedWarning: Configuration option(s) ['use_tpool'] not supported     
+[Fri Jul 13 00:24:43.697909 2018] [:error] [pid 17714]   exception.NotSupportedWarning   
   
 This error message also shows up when manually testing placement API:    
 *$ sudo -H -u nova bash -c '/var/www/cgi-bin/nova/nova-placement-api'    
