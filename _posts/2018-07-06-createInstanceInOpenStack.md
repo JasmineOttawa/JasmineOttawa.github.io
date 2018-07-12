@@ -9,16 +9,11 @@ openstack server create --image Ubuntu_16.04_LTS --flavor ... --key-name ... --n
 openstack server list  
   
 investigation --   
-/var/log/nova/nova-scheduler.log shows:   
-  `ERROR nova.scheduler.client.report ...... Failed to retrieve allocation candidates from placement API for filters {'VCPU': 2, 'MEMORY_MB': 4096}. Got 500: <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">  
-  <html><head>  
-  <title>500 Internal Server Error</title>  
-  </head><body>  
-  <h1>Internal Server Error</h1>  
+/var/log/nova/nova-scheduler.log shows 500 internel server error :   
+  `......    
   <p>The server encountered an internal error or misconfiguration and was unable to complete your request.</p>  
   <p>Please contact the server administrator at [no address given] to inform them of the time this error occurred,  and the actions you performed just before this error.</p>  
-  <p>More information about this error may be available in the server error log.</p>  
-  </body></html>`
+  <p>More information about this error may be available in the server error log.</p>  `  
 
 go to server error log, /var/log/httpd/placement_wsgi_error.log, First error shows at Jul 08:   
  ` [Sun Jul 08 03:44:39[:error]  mod_wsgi (pid=14961): Target WSGI script '/var/www/cgi-bin/nova/nova-placement-api' cannot be loaded as Python module.  
@@ -45,19 +40,7 @@ openstack-config --set /etc/nova/nova.conf DEFAULT compute_driver libvirt.Libvir
 openstack-config --set /etc/nova/nova.conf libvirt virt_type kvm  
   
 remove these 2 lines, the config is already in the file, uncomment them in the corresponding section  
-  `[root@illinbws111 nova(keystone_core)]# diff nova.conf.orig nova.conf  
-  137c137  
-  < #compute_driver=libvirt.LibvirtDriver  
-  ---  
-  > compute_driver=libvirt.LibvirtDriver  
-  6386c6386  
-  < #virt_type=kvm  
-  ---  
-  > virt_type=kvm  
-  11307,11308d11306  
-  < openstack-config --set /etc/nova/nova.conf DEFAULT compute_driver libvirt.LibvirtDriver  
-  < openstack-config --set /etc/nova/nova.conf libvirt virt_type kvm`  
-
+ 
 Now got another error   
  ` [Thu Jul 12 10:10:16[:error] mod_wsgi (pid=14970): Target WSGI script '/var/www/cgi-bin/nova/nova-placement-api' cannot be loaded as Python module.  
   [Thu Jul 12 10:10:16[:error] mod_wsgi (pid=14970): Exception occurred processing WSGI script '/var/www/cgi-bin/nova/nova-placement-api'.  
