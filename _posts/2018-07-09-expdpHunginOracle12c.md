@@ -12,7 +12,6 @@ add TRACE=480300 in command line,
 trace was generated on dm process, it stucks at a system call:   
 select sql_text from v$sqlarea where sql_id  = '65sh6sucvcnc8';  
 SQL_TEXT  
-----------------------------------------------------------------  
 BEGIN    SYS.KUPM$MCP.MAIN('STRMINST', 'R6', 0, 4719360);  END;  
 
 Note that parallel, FLASHBACK_TIME are the 2 features involved in some bugs,   
