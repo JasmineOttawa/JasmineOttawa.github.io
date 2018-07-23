@@ -4,7 +4,7 @@ title: "SHMALL in Oracle"
 date: 2018-07-05
 summary: default SHMALL is small on RHEL7, easily cause ORA-27104
 categories: oracle shamall
-commentIssueId: 1
+githubIssueId: 1
 ---
 Q - tuning oracle 12c on RHEL7 got error ORA-27104. same tuning process works fine on RHEL6  
   
